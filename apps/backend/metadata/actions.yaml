@@ -3,16 +3,22 @@ actions:
     definition:
       kind: synchronous
       handler: http://host.docker.internal:3000/api/actions/complete_quiz
+    permissions:
+      - role: user
     comment: complete_quiz
   - name: create_quiz
     definition:
       kind: synchronous
       handler: http://host.docker.internal:3000/api/actions/create_quiz
+    permissions:
+      - role: user
     comment: create_quiz
   - name: submit_question_response
     definition:
       kind: synchronous
       handler: http://host.docker.internal:3000/api/actions/submit_question_response
+    permissions:
+      - role: user
     comment: submit_question_response
 custom_types:
   enums:
