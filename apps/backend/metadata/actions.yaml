@@ -1,0 +1,85 @@
+actions:
+  - name: complete_quiz
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:3000/api/actions/complete_quiz
+    comment: complete_quiz
+  - name: create_quiz
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:3000/api/actions/create_quiz
+    comment: create_quiz
+  - name: submit_question_response
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:3000/api/actions/submit_question_response
+    comment: submit_question_response
+custom_types:
+  enums:
+    - name: Create_Quiz_Difficulty
+      values:
+        - description: null
+          is_deprecated: null
+          value: EASY
+        - description: null
+          is_deprecated: null
+          value: MODERATE
+        - description: null
+          is_deprecated: null
+          value: HARD
+  input_objects:
+    - name: SubmitQuestionResponseInput
+    - name: Submit_Question_Response_Input
+  objects:
+    - name: QuizQuestion
+    - name: CreateQuizOutput
+      relationships:
+        - field_mapping:
+            questionId: id
+          name: question
+          remote_table:
+            name: questions
+            schema: public
+          source: default
+          type: object
+    - name: Create_Quiz_Action_Response
+      relationships:
+        - field_mapping:
+            quizId: id
+          name: quiz
+          remote_table:
+            name: quizzes
+            schema: public
+          source: default
+          type: object
+    - name: SubmitQuestionResponseOutput
+      relationships:
+        - field_mapping:
+            quiz_question_id: id
+          name: quiz_question
+          remote_table:
+            name: quizzes_questions
+            schema: public
+          source: default
+          type: object
+    - name: Submit_Question_Response_Output
+      relationships:
+        - field_mapping:
+            quiz_question_id: id
+          name: quiz_question
+          remote_table:
+            name: quizzes_questions
+            schema: public
+          source: default
+          type: object
+    - name: Complete_Quiz_Output
+      relationships:
+        - field_mapping:
+            quiz_id: id
+          name: quiz
+          remote_table:
+            name: quizzes
+            schema: public
+          source: default
+          type: object
+  scalars: []

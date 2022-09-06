@@ -1,0 +1,4 @@
+table:
+  name: quizzes_questions_response_correctness
+  schema: public
+is_enum: true

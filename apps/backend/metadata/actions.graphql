@@ -1,0 +1,61 @@
+type Mutation {
+  complete_quiz(
+    quiz_id: String!
+  ): Complete_Quiz_Output
+}
+
+type Mutation {
+  create_quiz(
+    difficulty: Create_Quiz_Difficulty!
+  ): Create_Quiz_Action_Response!
+}
+
+type Mutation {
+  submit_question_response(
+    question_response: Submit_Question_Response_Input!
+  ): Submit_Question_Response_Output
+}
+
+enum Create_Quiz_Difficulty {
+  EASY
+  MODERATE
+  HARD
+}
+
+input SubmitQuestionResponseInput {
+  quiz_question_id: String!
+  response: String!
+}
+
+input Submit_Question_Response_Input {
+  quiz_question_id: String!
+  response: String!
+}
+
+type QuizQuestion {
+  id: String!
+  input_label: String!
+  input_options: jsonb
+  answer_type: String
+}
+
+type CreateQuizOutput {
+  questionId: String!
+}
+
+type Create_Quiz_Action_Response {
+  quizId: String!
+}
+
+type SubmitQuestionResponseOutput {
+  quiz_question_id: String!
+}
+
+type Submit_Question_Response_Output {
+  quiz_question_id: String!
+}
+
+type Complete_Quiz_Output {
+  quiz_id: String!
+}
+

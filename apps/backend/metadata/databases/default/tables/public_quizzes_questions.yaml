@@ -1,0 +1,23 @@
+table:
+  name: quizzes_questions
+  schema: public
+object_relationships:
+  - name: question
+    using:
+      foreign_key_constraint_on: question_id
+  - name: quiz
+    using:
+      foreign_key_constraint_on: quiz_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - question_id
+        - quiz_id
+        - response
+        - response_correctness
+      filter:
+        quiz:
+          user_id:
+            _eq: X-Hasura-User-Id

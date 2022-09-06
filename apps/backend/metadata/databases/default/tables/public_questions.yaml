@@ -1,0 +1,19 @@
+table:
+  name: questions
+  schema: public
+array_relationships:
+  - name: quizzes
+    using:
+      foreign_key_constraint_on:
+        column: question_id
+        table:
+          name: quizzes_questions
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - input_label
+        - input_options
+      filter: {}

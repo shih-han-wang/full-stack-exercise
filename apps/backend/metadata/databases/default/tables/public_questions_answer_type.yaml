@@ -1,0 +1,4 @@
+table:
+  name: questions_answer_type
+  schema: public
+is_enum: true

@@ -1,0 +1,26 @@
+table:
+  name: quizzes
+  schema: public
+object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+array_relationships:
+  - name: questions
+    using:
+      foreign_key_constraint_on:
+        column: quiz_id
+        table:
+          name: quizzes_questions
+          schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - user_id
+        - completed_at
+        - started_at
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

@@ -1,0 +1,6 @@
+- "!include public_questions.yaml"
+- "!include public_questions_answer_type.yaml"
+- "!include public_quizzes.yaml"
+- "!include public_quizzes_questions.yaml"
+- "!include public_quizzes_questions_response_correctness.yaml"
+- "!include public_users.yaml"

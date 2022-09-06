@@ -1,0 +1,35 @@
+{
+  "name": "full-stack-test",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "setup_exercise": "turbo run setup_exercise",
+    "codegen": "turbo run codegen && pnpm format",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.11.5",
+    "@graphql-codegen/introspection": "^2.2.1",
+    "@graphql-codegen/typescript": "^2.7.3",
+    "@graphql-codegen/typescript-operations": "^2.5.3",
+    "eslint-config-hyphen": "workspace:*",
+    "prettier": "latest",
+    "prettier-plugin-organize-imports": "latest",
+    "turbo": "latest",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "pnpm@7.9.0"
+}
