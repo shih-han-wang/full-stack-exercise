@@ -20,25 +20,27 @@ describe('createQuizQuestions', () => {
   })
 
   it(`returns a set of ${NUMBER_OF_QUESTIONS_PER_QUIZ} questions`, async () => {
-    const quizQuestions = await createQuizQuestions(Create_Quiz_Difficulty.Easy)
-    expect(quizQuestions).toHaveLength(NUMBER_OF_QUESTIONS_PER_QUIZ)
+    const quizQuestionIds = await createQuizQuestions(
+      Create_Quiz_Difficulty.Easy
+    )
+    expect(quizQuestionIds).toHaveLength(NUMBER_OF_QUESTIONS_PER_QUIZ)
   })
 
   it('returns a set of questions where each question is unique', async () => {
-    const quizQuestions = await createQuizQuestions(Create_Quiz_Difficulty.Easy)
-    const uniqueQuizQuestionIds = [
-      ...new Set(quizQuestions.map((item) => item.id))
-    ]
+    const quizQuestionIds = await createQuizQuestions(
+      Create_Quiz_Difficulty.Easy
+    )
+    const uniqueQuizQuestionIds = [...new Set(quizQuestionIds)]
     expect(uniqueQuizQuestionIds).toHaveLength(NUMBER_OF_QUESTIONS_PER_QUIZ)
   })
 
-  it('returns a new random set of questions each time it is called', async () => {
-    const quizQuestions1 = await createQuizQuestions(
+  it('returns a new set of questions each time it is called', async () => {
+    const quizQuestionsIds1 = await createQuizQuestions(
       Create_Quiz_Difficulty.Easy
     )
-    const quizQuestions2 = await createQuizQuestions(
+    const quizQuestionsIds2 = await createQuizQuestions(
       Create_Quiz_Difficulty.Easy
     )
-    expect(quizQuestions1).not.toEqual(quizQuestions2)
+    expect(quizQuestionsIds1).not.toEqual(quizQuestionsIds2)
   })
 })

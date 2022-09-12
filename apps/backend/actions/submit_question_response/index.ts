@@ -24,18 +24,16 @@ export const submit_question_response = async (
     const userId = req.body.session_variables['x-hasura-user-id']
     const input = req.body.input.question_response
 
-    // TASK 2
-    // Instructions:
-    // https://www.notion.so/joinhyphen/Full-stack-engineer-exercise-0ae49ea931074efc816d66f2ce7c27e7#24658b38748c49d6a38febebb2515616
-    // ...
     const correctness = await determineQuestionResponseCorrectness(input)
-    const quizQuestionId = await updateQuizQuestionResponse(input, correctness)
+    const quizQuestionId = await updateQuizQuestionResponse(
+      userId,
+      input,
+      correctness
+    )
 
-    res.status(200).json({ quiz_question_id: quizQuestionId })
-    //                          ^^
-    // As in `create_quiz`, we only need to return the ID here.
+    return res.status(200).json({ quiz_question_id: quizQuestionId })
   } catch (error) {
     console.error(error)
-    res.status(500)
+    return res.status(500)
   }
 }

@@ -21,18 +21,12 @@ export const create_quiz = async (
     const userId = req.body.session_variables['x-hasura-user-id']
     const difficulty = req.body.input.difficulty
 
-    const questions = await createQuizQuestions(difficulty) // ❌ not yet implemented
-    const quizId = await insertQuiz(userId, questions) // ✅ implemented
+    const questionIds = await createQuizQuestions(difficulty) // ❌ not yet implemented
+    const quizId = await insertQuiz(userId, questionIds) // ✅ implemented
 
-    res.status(200).json({ quizId })
-    //                      ^^
-    // We only need to return the `quizId` here thanks to a configured object
-    // relationship in Hasura, which connects this action's response to the rest
-    // of the graph. This means the end user is able to request fields from the
-    // `quizzes` object as a response to the original `create_quiz` mutation.
-    // More info: https://hasura.io/docs/latest/actions/action-relationships/
+    return res.status(200).json({ quizId })
   } catch (error) {
     console.error(error)
-    res.status(500)
+    return res.status(500)
   }
 }

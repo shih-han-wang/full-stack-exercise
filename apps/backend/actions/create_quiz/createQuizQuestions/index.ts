@@ -1,4 +1,3 @@
-import { DeepRequired } from 'ts-essentials'
 import { server } from '../../../sdk'
 import {
   Mutation_RootCreate_QuizArgs,
@@ -6,16 +5,9 @@ import {
 } from '../../../sdk/generated'
 
 export const NUMBER_OF_QUESTIONS_PER_QUIZ = 5
-export const EASY_DIFFICULTY_MAX_THESHOLD = 2
-export const MODERATE_DIFFICULTY_MAX_THRESHOLD = 3
 
 export type CreateQuizQuestionsOutput = Array<
-  DeepRequired<
-    Pick<
-      Quizzes_Questions_Insert_Input,
-      'id' | 'quiz_id' | 'question_id' | 'order'
-    >
-  >
+  NonNullable<Quizzes_Questions_Insert_Input['question_id']>
 >
 
 export const createQuizQuestions = async (
@@ -25,7 +17,7 @@ export const createQuizQuestions = async (
 
   // TASK 1
   // Instructions:
-  // https://www.notion.so/joinhyphen/Full-stack-engineer-exercise-0ae49ea931074efc816d66f2ce7c27e7#50dde96adb234e429b2741c88afff9c0
+  // https://www.notion.so/joinhyphen/Full-stack-engineer-exercise-2-5ccde379536d47e98fd6cfea63b39ef8#3416333e0d154921b8c93d121c8dbf77
   // ...
 
   return []

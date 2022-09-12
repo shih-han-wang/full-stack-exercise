@@ -2,11 +2,16 @@ import { randomUUID } from 'crypto'
 import { CreateQuizOutput } from '..'
 import { server } from '../../../sdk'
 import { InsertQuizMutationVariables } from '../../../sdk/generated'
+import { CreateQuizQuestionsOutput } from '../createQuizQuestions'
 
 export const insertQuiz = async (
   userId: InsertQuizMutationVariables['userId'],
-  questions: InsertQuizMutationVariables['questions']
+  questionIds: CreateQuizQuestionsOutput
 ): Promise<CreateQuizOutput['quizId']> => {
+  const questions: InsertQuizMutationVariables['questions'] = questionIds.map(
+    (item) => ({ question_id: item })
+  )
+
   const data = await server.InsertQuiz({
     quizId: randomUUID(),
     userId,
