@@ -3,7 +3,10 @@ import {
   Mutation_Root,
   Mutation_RootCreate_QuizArgs
 } from '../../sdk/generated'
-import { HasuraRequestWithSessionVars } from '../../sdk/helpers'
+import {
+  HasuraActionPayload,
+  HasuraRequestWithSessionVars
+} from '../../sdk/helpers'
 import { createQuizQuestions } from './createQuizQuestions'
 import { insertQuiz } from './insertQuiz'
 
@@ -11,7 +14,9 @@ export type CreateQuizInput = Omit<NextApiRequest, 'body'> & {
   body: HasuraRequestWithSessionVars<Mutation_RootCreate_QuizArgs>
 }
 
-export type CreateQuizOutput = Pick<Mutation_Root['create_quiz'], 'quizId'>
+export type CreateQuizOutput = HasuraActionPayload<
+  Pick<Mutation_Root['create_quiz'], 'quizId'>
+>
 
 export const create_quiz = async (
   req: CreateQuizInput,
@@ -27,6 +32,8 @@ export const create_quiz = async (
     return res.status(200).json({ quizId })
   } catch (error) {
     console.error(error)
-    return res.status(500)
+    return res.status(400).json({
+      message: 'Could not create quiz'
+    })
   }
 }

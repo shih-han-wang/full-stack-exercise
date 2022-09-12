@@ -20,7 +20,7 @@ export type HasuraRequestWithSessionVars<
   }
 } & HasuraRequest<TInputType, TActionName>
 
-export interface HasuraEventPayload<TData extends UnknownInput = UnknownInput> {
+export type HasuraEventPayload<TData extends UnknownInput = UnknownInput> = {
   event: {
     session_variables: {
       'x-hasura-role': string
@@ -46,3 +46,10 @@ export interface HasuraEventPayload<TData extends UnknownInput = UnknownInput> {
     name: string
   }
 }
+
+export type HasuraActionPayload<TData> =
+  | TData
+  | {
+      message: string
+      extensions?: { code?: number } & Record<string, unknown>
+    }
