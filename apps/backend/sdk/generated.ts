@@ -2271,18 +2271,7 @@ export type GetQuestionsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetQuestionsQuery = {
   __typename?: 'query_root'
-  questions: Array<{
-    __typename?: 'questions'
-    id: string
-    input_label: string
-    input_options?:
-      | Record<string | number, unknown>
-      | Array<string | number | Record<string | number, unknown>>
-      | null
-      | undefined
-    answer_type: Questions_Answer_Type_Enum
-    difficulty: number
-  }>
+  questions: Array<{ __typename?: 'questions'; id: string; difficulty: number }>
 }
 
 export type InsertQuizMutationVariables = Exact<{
@@ -2302,9 +2291,6 @@ export const GetQuestionsDocument = gql`
   query GetQuestions {
     questions {
       id
-      input_label
-      input_options
-      answer_type
       difficulty
     }
   }
