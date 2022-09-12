@@ -2287,6 +2287,38 @@ export type InsertQuizMutation = {
   insert_quizzes_one?: { __typename?: 'quizzes'; id: string } | null | undefined
 }
 
+export type GetQuestionCorrectAnswerQueryVariables = Exact<{
+  quiz_question_id: Scalars['String']
+}>
+
+export type GetQuestionCorrectAnswerQuery = {
+  __typename?: 'query_root'
+  quizzes_questions_by_pk?:
+    | {
+        __typename?: 'quizzes_questions'
+        question: { __typename?: 'questions'; answer_value: string }
+      }
+    | null
+    | undefined
+}
+
+export type UpdateQuizQuestionResponseMutationVariables = Exact<{
+  quiz_question_id: Scalars['String']
+  user_id: Scalars['String']
+  input: Quizzes_Questions_Set_Input
+}>
+
+export type UpdateQuizQuestionResponseMutation = {
+  __typename?: 'mutation_root'
+  update_quizzes_questions?:
+    | {
+        __typename?: 'quizzes_questions_mutation_response'
+        returning: Array<{ __typename?: 'quizzes_questions'; id: string }>
+      }
+    | null
+    | undefined
+}
+
 export const GetQuestionsDocument = gql`
   query GetQuestions {
     questions {
@@ -2305,6 +2337,35 @@ export const InsertQuizDocument = gql`
       object: { id: $quizId, user_id: $userId, questions: { data: $questions } }
     ) {
       id
+    }
+  }
+`
+export const GetQuestionCorrectAnswerDocument = gql`
+  query GetQuestionCorrectAnswer($quiz_question_id: String!) {
+    quizzes_questions_by_pk(id: $quiz_question_id) {
+      question {
+        answer_value
+      }
+    }
+  }
+`
+export const UpdateQuizQuestionResponseDocument = gql`
+  mutation UpdateQuizQuestionResponse(
+    $quiz_question_id: String!
+    $user_id: String!
+    $input: quizzes_questions_set_input!
+  ) {
+    update_quizzes_questions(
+      where: {
+        id: { _eq: $quiz_question_id }
+        quiz: { user_id: { _eq: $user_id } }
+        response: { _is_null: true }
+      }
+      _set: $input
+    ) {
+      returning {
+        id
+      }
     }
   }
 `
@@ -2351,6 +2412,36 @@ export function getSdk(
             ...wrappedRequestHeaders
           }),
         'InsertQuiz',
+        'mutation'
+      )
+    },
+    GetQuestionCorrectAnswer(
+      variables: GetQuestionCorrectAnswerQueryVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<GetQuestionCorrectAnswerQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetQuestionCorrectAnswerQuery>(
+            GetQuestionCorrectAnswerDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        'GetQuestionCorrectAnswer',
+        'query'
+      )
+    },
+    UpdateQuizQuestionResponse(
+      variables: UpdateQuizQuestionResponseMutationVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<UpdateQuizQuestionResponseMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<UpdateQuizQuestionResponseMutation>(
+            UpdateQuizQuestionResponseDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        'UpdateQuizQuestionResponse',
         'mutation'
       )
     }
@@ -2402,3 +2493,49 @@ export const mockInsertQuizMutation = (
     'InsertQuiz',
     resolver
   )
+
+/**
+ * @param resolver a function that accepts a captured request and may return a mocked response.
+ * @see https://mswjs.io/docs/basics/response-resolver
+ * @example
+ * mockGetQuestionCorrectAnswerQuery((req, res, ctx) => {
+ *   const { quiz_question_id } = req.variables;
+ *   return res(
+ *     ctx.data({ quizzes_questions_by_pk })
+ *   )
+ * })
+ */
+export const mockGetQuestionCorrectAnswerQuery = (
+  resolver: ResponseResolver<
+    GraphQLRequest<GetQuestionCorrectAnswerQueryVariables>,
+    GraphQLContext<GetQuestionCorrectAnswerQuery>,
+    any
+  >
+) =>
+  graphql.query<
+    GetQuestionCorrectAnswerQuery,
+    GetQuestionCorrectAnswerQueryVariables
+  >('GetQuestionCorrectAnswer', resolver)
+
+/**
+ * @param resolver a function that accepts a captured request and may return a mocked response.
+ * @see https://mswjs.io/docs/basics/response-resolver
+ * @example
+ * mockUpdateQuizQuestionResponseMutation((req, res, ctx) => {
+ *   const { quiz_question_id, user_id, input } = req.variables;
+ *   return res(
+ *     ctx.data({ update_quizzes_questions })
+ *   )
+ * })
+ */
+export const mockUpdateQuizQuestionResponseMutation = (
+  resolver: ResponseResolver<
+    GraphQLRequest<UpdateQuizQuestionResponseMutationVariables>,
+    GraphQLContext<UpdateQuizQuestionResponseMutation>,
+    any
+  >
+) =>
+  graphql.mutation<
+    UpdateQuizQuestionResponseMutation,
+    UpdateQuizQuestionResponseMutationVariables
+  >('UpdateQuizQuestionResponse', resolver)
