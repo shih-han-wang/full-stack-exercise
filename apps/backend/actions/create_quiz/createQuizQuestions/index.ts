@@ -17,7 +17,7 @@ export const createQuizQuestions = async (
 
   // TASK 1
   // Instructions:
-  // https://www.notion.so/joinhyphen/Full-stack-engineer-exercise-2-5ccde379536d47e98fd6cfea63b39ef8#3416333e0d154921b8c93d121c8dbf77
+  // https://www.notion.so/joinhyphen/Full-stack-engineer-exercise-5ccde379536d47e98fd6cfea63b39ef8#3416333e0d154921b8c93d121c8dbf77
   // ...
 
   return ['question1', 'question2', 'question3', 'question4', 'question5']
