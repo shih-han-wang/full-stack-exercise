@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { server } from '../../sdk'
 import {
   Mutation_Root,
   Mutation_RootComplete_QuizArgs
@@ -21,16 +22,20 @@ export const complete_quiz = async (
   res: NextApiResponse<CompleteQuizOutput>
 ) => {
   try {
-    // TASK 3
-    // Instructions:
-    // https://www.notion.so/joinhyphen/Full-stack-engineer-exercise-0ae49ea931074efc816d66f2ce7c27e7#e2d6346a45e4436988cfd769ebc6339a
-    // ...
+    const userId = req.body.session_variables['x-hasura-user-id']
+    const quizId = req.body.input.quiz_id
+    const data = await server.CompleteQuiz({ userId, quizId })
+    const completedQuizId = data.update_quizzes?.returning[0].id
 
-    return res.status(200).json({ quiz_id: 'quizId' })
+    if (!completedQuizId) {
+      throw new Error('Could not complete quiz')
+    }
+
+    return res.status(200).json({ quiz_id: completedQuizId })
   } catch (error) {
     console.error(error)
     return res.status(400).json({
-      message: 'Could not create quiz'
+      message: 'Could not complete quiz'
     })
   }
 }

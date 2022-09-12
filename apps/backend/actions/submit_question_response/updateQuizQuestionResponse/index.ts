@@ -15,8 +15,8 @@ export const updateQuizQuestionResponse = async (
   correctness: Quizzes_Questions_Response_Correctness_Enum
 ): Promise<UpdateQuizQuestionResponseOutput> => {
   const data = await server.UpdateQuizQuestionResponse({
-    user_id: userId,
-    quiz_question_id: input.quiz_question_id,
+    userId,
+    quizQuestionId: input.quiz_question_id,
     input: {
       response: input.response,
       response_correctness: correctness

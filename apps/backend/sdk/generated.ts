@@ -2267,6 +2267,26 @@ export type Users_Updates = {
   where: Users_Bool_Exp
 }
 
+export type CompleteQuizMutationVariables = Exact<{
+  quizId: Scalars['String']
+  userId: Scalars['String']
+}>
+
+export type CompleteQuizMutation = {
+  __typename?: 'mutation_root'
+  update_quizzes?:
+    | {
+        __typename?: 'quizzes_mutation_response'
+        returning: Array<{
+          __typename?: 'quizzes'
+          id: string
+          completed_at?: string | null | undefined
+        }>
+      }
+    | null
+    | undefined
+}
+
 export type GetQuestionsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetQuestionsQuery = {
@@ -2303,8 +2323,8 @@ export type GetQuestionCorrectAnswerQuery = {
 }
 
 export type UpdateQuizQuestionResponseMutationVariables = Exact<{
-  quiz_question_id: Scalars['String']
-  user_id: Scalars['String']
+  quizQuestionId: Scalars['String']
+  userId: Scalars['String']
   input: Quizzes_Questions_Set_Input
 }>
 
@@ -2319,6 +2339,23 @@ export type UpdateQuizQuestionResponseMutation = {
     | undefined
 }
 
+export const CompleteQuizDocument = gql`
+  mutation CompleteQuiz($quizId: String!, $userId: String!) {
+    update_quizzes(
+      where: {
+        id: { _eq: $quizId }
+        user_id: { _eq: $userId }
+        completed_at: { _is_null: true }
+      }
+      _set: { completed_at: "now()" }
+    ) {
+      returning {
+        id
+        completed_at
+      }
+    }
+  }
+`
 export const GetQuestionsDocument = gql`
   query GetQuestions {
     questions {
@@ -2351,14 +2388,14 @@ export const GetQuestionCorrectAnswerDocument = gql`
 `
 export const UpdateQuizQuestionResponseDocument = gql`
   mutation UpdateQuizQuestionResponse(
-    $quiz_question_id: String!
-    $user_id: String!
+    $quizQuestionId: String!
+    $userId: String!
     $input: quizzes_questions_set_input!
   ) {
     update_quizzes_questions(
       where: {
-        id: { _eq: $quiz_question_id }
-        quiz: { user_id: { _eq: $user_id } }
+        id: { _eq: $quizQuestionId }
+        quiz: { user_id: { _eq: $userId } }
         response: { _is_null: true }
       }
       _set: $input
@@ -2387,6 +2424,21 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper
 ) {
   return {
+    CompleteQuiz(
+      variables: CompleteQuizMutationVariables,
+      requestHeaders?: Dom.RequestInit['headers']
+    ): Promise<CompleteQuizMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CompleteQuizMutation>(
+            CompleteQuizDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        'CompleteQuiz',
+        'mutation'
+      )
+    },
     GetQuestions(
       variables?: GetQuestionsQueryVariables,
       requestHeaders?: Dom.RequestInit['headers']
@@ -2448,6 +2500,29 @@ export function getSdk(
   }
 }
 export type Sdk = ReturnType<typeof getSdk>
+
+/**
+ * @param resolver a function that accepts a captured request and may return a mocked response.
+ * @see https://mswjs.io/docs/basics/response-resolver
+ * @example
+ * mockCompleteQuizMutation((req, res, ctx) => {
+ *   const { quizId, userId } = req.variables;
+ *   return res(
+ *     ctx.data({ update_quizzes })
+ *   )
+ * })
+ */
+export const mockCompleteQuizMutation = (
+  resolver: ResponseResolver<
+    GraphQLRequest<CompleteQuizMutationVariables>,
+    GraphQLContext<CompleteQuizMutation>,
+    any
+  >
+) =>
+  graphql.mutation<CompleteQuizMutation, CompleteQuizMutationVariables>(
+    'CompleteQuiz',
+    resolver
+  )
 
 /**
  * @param resolver a function that accepts a captured request and may return a mocked response.
@@ -2522,7 +2597,7 @@ export const mockGetQuestionCorrectAnswerQuery = (
  * @see https://mswjs.io/docs/basics/response-resolver
  * @example
  * mockUpdateQuizQuestionResponseMutation((req, res, ctx) => {
- *   const { quiz_question_id, user_id, input } = req.variables;
+ *   const { quizQuestionId, userId, input } = req.variables;
  *   return res(
  *     ctx.data({ update_quizzes_questions })
  *   )
