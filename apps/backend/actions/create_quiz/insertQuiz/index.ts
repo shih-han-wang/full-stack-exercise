@@ -9,7 +9,11 @@ export const insertQuiz = async (
   questionIds: CreateQuizQuestionsOutput
 ): Promise<CreateQuizOutput['quizId']> => {
   const questions: InsertQuizMutationVariables['questions'] = questionIds.map(
-    (item) => ({ question_id: item })
+    (item, index) => ({
+      id: randomUUID(),
+      question_id: item,
+      order: index + 1
+    })
   )
 
   const data = await server.InsertQuiz({
