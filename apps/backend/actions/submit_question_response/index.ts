@@ -27,18 +27,14 @@ export const submit_question_response = async (
 ) => {
   try {
     const userId = req.body.session_variables['x-hasura-user-id']
-    console.log('TCL: ~ userId', userId)
     const input = req.body.input.question_response
-    console.log('TCL: ~ input', input)
 
     const correctness = await determineQuestionResponseCorrectness(input)
-    console.log('TCL: ~ correctness', correctness)
     const quizQuestionId = await updateQuizQuestionResponse(
       userId,
       input,
       correctness
     )
-    console.log('TCL: ~ quizQuestionId', quizQuestionId)
 
     return res.status(200).json({
       quiz_question_id: quizQuestionId
