@@ -13,6 +13,7 @@ select_permissions:
   - role: user
     permission:
       columns:
+        - answer_type
         - id
         - input_label
         - input_options
