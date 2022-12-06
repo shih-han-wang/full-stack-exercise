@@ -8,6 +8,7 @@ type Props = {
   disabled: boolean
 }
 
+// Copied example from https://chakra-ui.com/docs/components/radio/usage
 const RadioGroup = ({ options, onChange, value, disabled }: Props) => {
   const { getRootProps, getRadioProps, isDisabled } = useRadioGroup({
     name: 'answer',
