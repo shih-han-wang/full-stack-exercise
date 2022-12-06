@@ -8,7 +8,13 @@ import { Create_Quiz_Difficulty } from 'backend/sdk/generated'
 
 import { QuizLayout } from '../src/components'
 import { apolloClient } from '../src/dataAccess'
-import { CREATE_QUIZ, GET_USER } from '../src/query'
+import { CREATE_QUIZ, GET_INCOMPLETE_QUIZZES, GET_USER } from '../src/query'
+
+type Question = {
+  __typename: 'quizzes_questions'
+  id: string
+  response?: string
+}
 
 type Props = {
   user: { __typename: 'users'; first_name: string }
@@ -71,6 +77,25 @@ const WelcomePage = ({ user }: Props) => {
 
 export const getServerSideProps = async () => {
   try {
+    const { data } = await apolloClient.query({
+      query: GET_INCOMPLETE_QUIZZES
+    })
+
+    const firstIncompleteQuiz = data?.quizzes[0]
+
+    if (firstIncompleteQuiz) {
+      const questionId = firstIncompleteQuiz.questions.find(
+        (question: Question) => !question.response
+      )?.id
+
+      return {
+        redirect: {
+          destination: `question/${questionId}`,
+          permanent: false
+        }
+      }
+    }
+
     const { data: userData } = await apolloClient.query({
       query: GET_USER,
       variables: { id: USER_ID }
