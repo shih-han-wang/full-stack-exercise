@@ -46,6 +46,11 @@ export enum Create_Quiz_Difficulty {
   Moderate = 'MODERATE'
 }
 
+export enum Quiz_Difficulty {
+  Easy = 'EASY',
+  Hard = 'HARD'
+}
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']>
