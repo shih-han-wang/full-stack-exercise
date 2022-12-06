@@ -9,7 +9,7 @@ import {
 
 export const NUMBER_OF_QUESTIONS_PER_QUIZ = 5
 export const DIFFICULTY_SCORE_DIVIDER = 0.5
-// Potential refactoring here to make it into algorithm
+// Future improvement: refactoring these into algorithm
 export const NUMBER_OF_EASY_QUESTIONS_FOR_MODERATE_QUIZ = 3
 export const NUMBER_OF_HARD_QUESTIONS_FOR_MODERATE_QUIZ =
   NUMBER_OF_QUESTIONS_PER_QUIZ - NUMBER_OF_EASY_QUESTIONS_FOR_MODERATE_QUIZ
