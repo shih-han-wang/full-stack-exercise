@@ -9,9 +9,35 @@ export const GET_INCOMPLETE_QUIZZES = gql`
     ) {
       id
       completed_at
-      questions(order_by: { order: asc }) {
+      questions(
+        order_by: { order: asc }
+        where: { response: { _is_null: true } }
+      ) {
         id
         response
+      }
+    }
+  }
+`
+
+export const GET_QUIZ_QUESTIONS_BY_QUESTION_ID = gql`
+  query GetQuizQuestionsByQuestionId($id: String!) {
+    quizzes_questions_by_pk(id: $id) {
+      order
+      response
+      quiz_id
+      quiz {
+        questions(order_by: { order: asc }) {
+          id
+          order
+          response_correctness
+        }
+      }
+      question {
+        answer_type
+        id
+        input_label
+        input_options
       }
     }
   }
@@ -25,6 +51,18 @@ export const CREATE_QUIZ = gql`
         questions(order_by: { order: asc }) {
           id
         }
+      }
+    }
+  }
+`
+
+export const SUBMIT_QUESTION_RESPONSE = gql`
+  mutation SubmitQuestionResponse(
+    $question_response: Submit_Question_Response_Input!
+  ) {
+    submit_question_response(question_response: $question_response) {
+      quiz_question {
+        id
       }
     }
   }

@@ -91,6 +91,7 @@ importers:
       '@emotion/styled': ^11.10.4
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.3.0
+      '@types/jest': ^29.0.0
       '@types/node': ^17.0.12
       '@types/react': 18.0.17
       backend: workspace:*
@@ -121,6 +122,7 @@ importers:
       '@babel/core': 7.18.13
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
+      '@types/jest': 29.0.0
       '@types/node': 17.0.45
       '@types/react': 18.0.17
       backend: link:../backend

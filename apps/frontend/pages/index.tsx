@@ -83,7 +83,7 @@ export const getServerSideProps = async () => {
 
     const firstIncompleteQuiz = data?.quizzes[0]
 
-    if (firstIncompleteQuiz) {
+    if (firstIncompleteQuiz?.questions?.length > 0) {
       const questionId = firstIncompleteQuiz.questions.find(
         (question: Question) => !question.response
       )?.id

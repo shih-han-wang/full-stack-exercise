@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components > Quiz > QuizLayout should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="css-0"
+  >
+    <h1
+      class="chakra-heading css-0"
+    >
+      Ask me a question.
+    </h1>
+    <div>
+      children
+    </div>
+  </div>
+</DocumentFragment>
+`;
