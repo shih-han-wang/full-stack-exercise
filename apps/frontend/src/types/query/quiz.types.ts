@@ -5,7 +5,7 @@ import {
 
 export interface QuizQuestion {
   id: string
-  order: number
+  order?: number
   response_correctness: Quizzes_Questions_Response_Correctness_Enum | null
   __typename: 'quizzes_questions'
 }

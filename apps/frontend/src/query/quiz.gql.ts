@@ -1,6 +1,17 @@
 import { gql } from '@apollo/client'
 
 // Queries
+export const GET_QUIZ = gql`
+  query GetQuiz($id: String!) {
+    quizzes_by_pk(id: $id) {
+      questions(order_by: { order: asc }) {
+        id
+        response_correctness
+      }
+    }
+  }
+`
+
 export const GET_INCOMPLETE_QUIZZES = gql`
   query GetIncompleteQuizzes {
     quizzes(
