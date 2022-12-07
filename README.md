@@ -10,6 +10,11 @@ NEXT_PUBLIC_HASURA_GRAPHQL_API="http://localhost:8080/v1/graphql"
 NEXT_PUBLIC_USER1_JWT_TOKEN="<user1_token>"
 ```
 
+## Future improvement 
+- Add more frontend tests
+- Improve form accessibility 
+- Implement algorithm to generate different number of easy/hard questions for moderate quiz based on total number of questions per quiz
+
 ## 🏁 Definition of done - Backend
 
 - [x]  `createQuizQuestions` function implemented
@@ -53,11 +58,13 @@ On selecting a difficulty:
 
 - [x]  Resembles the [Figma designs](https://www.figma.com/file/01u1PJtOwHZgfMJk5jtNUd/Full-stack-engineer-exercise) (password: `hyphenexercise`)
 
-# 🏁  Final checks
+## 🏁  Final checks
 
 - [x]  `pnpm typecheck` — should succeed with no type errors
 - [x]  `pnpm build` — Next.js app build should succeed
 - [x]  `pnpm test` — all tests should pass
+
+
 
 ---
 
