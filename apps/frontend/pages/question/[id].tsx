@@ -13,6 +13,7 @@ export type Props = {
   id: string
   currentOrder: number
   response: string | null
+  quizId: string
 }
 
 const QuestionPage = ({
@@ -22,8 +23,9 @@ const QuestionPage = ({
     input_label: inputLabel,
     input_options: inputOptions
   },
-  id,
   currentOrder,
+  id,
+  quizId,
   response
 }: Props) => {
   const [answer, setAnswer] = useState<string | null>(null)
@@ -32,7 +34,8 @@ const QuestionPage = ({
     allQuestions,
     currentOrder,
     id,
-    setAnswer
+    setAnswer,
+    quizId
   })
 
   const { QuizTemplate, props, showSubmitBtn } = useQuizTemplate({
@@ -96,10 +99,11 @@ export const getServerSideProps = async ({
     return {
       props: {
         allQuestions: questionData?.quiz?.questions,
+        currentOrder: questionData?.order,
         currentQuestion: questionData?.question,
         id,
-        response: questionData?.response,
-        currentOrder: questionData?.order
+        quizId: questionData?.quiz_id,
+        response: questionData?.response
       }
     }
   } catch (error) {

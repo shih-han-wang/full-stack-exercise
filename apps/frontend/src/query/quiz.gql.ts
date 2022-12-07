@@ -67,3 +67,14 @@ export const SUBMIT_QUESTION_RESPONSE = gql`
     }
   }
 `
+export const COMPLETE_QUIZ = gql`
+  mutation CompleteQuiz($quiz_id: String!) {
+    complete_quiz(quiz_id: $quiz_id) {
+      quiz {
+        questions {
+          response_correctness
+        }
+      }
+    }
+  }
+`
