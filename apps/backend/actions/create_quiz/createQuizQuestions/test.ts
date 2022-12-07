@@ -1,6 +1,7 @@
 import {
   createQuizQuestions,
   DIFFICULTY_SCORE_DIVIDER,
+  NUMBER_OF_EASY_QUESTIONS_FOR_MODERATE_QUIZ,
   NUMBER_OF_HARD_QUESTIONS_FOR_MODERATE_QUIZ,
   NUMBER_OF_QUESTIONS_PER_QUIZ
 } from '.'
@@ -80,6 +81,20 @@ describe('createQuizQuestions', () => {
         (difficulty) => difficulty && difficulty >= DIFFICULTY_SCORE_DIVIDER
       )
     ).toHaveLength(NUMBER_OF_HARD_QUESTIONS_FOR_MODERATE_QUIZ)
+  })
+
+  it(`returns ${NUMBER_OF_EASY_QUESTIONS_FOR_MODERATE_QUIZ} easy questions for ${Create_Quiz_Difficulty.Moderate} quiz`, async () => {
+    const quizQuestionIds = await createQuizQuestions(
+      Create_Quiz_Difficulty.Moderate
+    )
+
+    const quizQuestionsDifficulties = getQuestionsDifficulties(quizQuestionIds)
+
+    expect(
+      quizQuestionsDifficulties.filter(
+        (difficulty) => difficulty && difficulty < DIFFICULTY_SCORE_DIVIDER
+      )
+    ).toHaveLength(NUMBER_OF_EASY_QUESTIONS_FOR_MODERATE_QUIZ)
   })
 
   it(`returns a set of hard questions for ${Create_Quiz_Difficulty.Hard} quiz`, async () => {
