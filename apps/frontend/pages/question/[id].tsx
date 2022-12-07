@@ -62,7 +62,7 @@ const QuestionPage = ({
     >
       <QuizNav questions={allQuestions} currentOrder={currentOrder} />
 
-      {loading || !props ? (
+      {loading || (props as any)?.value == undefined ? (
         <Flex alignItems='center' h='100vh' justifyContent='center' gap='2'>
           <Spinner size='lg' />
         </Flex>
