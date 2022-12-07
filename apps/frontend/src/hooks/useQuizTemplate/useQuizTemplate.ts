@@ -20,14 +20,16 @@ const QuizTemplates = {
 
 type Props = {
   answerType: Questions_Answer_Type_Enum
+  disabled: boolean
   handleSubmit: (_response: string) => void
   inputOptions: string[] | null
   setAnswer: Dispatch<SetStateAction<string | null>>
-  value: string | undefined
+  value: string
 }
 
 const useQuizTemplate = ({
   answerType,
+  disabled,
   handleSubmit,
   inputOptions,
   setAnswer,
@@ -45,8 +47,7 @@ const useQuizTemplate = ({
   )
 
   useEffect(() => {
-    const defaultProps = { value, disabled: !!value }
-
+    const defaultProps = { value, disabled }
     switch (template) {
       case Template.RadioGrope:
         setShowSubmitBtn(false)
@@ -70,7 +71,15 @@ const useQuizTemplate = ({
       default:
         break
     }
-  }, [template, inputOptions, answerType, handleSubmit, setAnswer, value])
+  }, [
+    answerType,
+    disabled,
+    handleSubmit,
+    inputOptions,
+    setAnswer,
+    template,
+    value
+  ])
 
   return { QuizTemplate, props, showSubmitBtn }
 }

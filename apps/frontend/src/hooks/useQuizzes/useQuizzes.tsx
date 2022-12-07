@@ -53,7 +53,7 @@ const useQuizzes = ({
     [allQuestions, currentOrder, push, handleSubmitAnswer, handleCompleteQuiz]
   )
 
-  return { handleSubmit, setAnswer, loading: loading }
+  return { handleSubmit, setAnswer, loading: loading || completing }
 }
 
 export default useQuizzes

@@ -1,7 +1,7 @@
 import { Flex, Spinner } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 
-import { useState } from 'react'
-import { QuizLayout, SubmitButton } from '../../src/components'
+import { QuizLayout, QuizNav, SubmitButton } from '../../src/components'
 import { apolloClient } from '../../src/dataAccess'
 import { useQuizTemplate, useQuizzes } from '../../src/hooks'
 import { GET_QUIZ_QUESTIONS_BY_QUESTION_ID } from '../../src/query'
@@ -28,7 +28,11 @@ const QuestionPage = ({
   quizId,
   response
 }: Props) => {
-  const [answer, setAnswer] = useState<string | null>(null)
+  const [answer, setAnswer] = useState<string | null>(response)
+
+  useEffect(() => {
+    setAnswer(response)
+  }, [response])
 
   const { handleSubmit, loading } = useQuizzes({
     allQuestions,
@@ -43,7 +47,8 @@ const QuestionPage = ({
     handleSubmit,
     inputOptions,
     setAnswer,
-    value: response || undefined
+    value: answer || '',
+    disabled: !!response
   })
 
   return (
@@ -55,6 +60,8 @@ const QuestionPage = ({
       justifyContent='space-between'
       flexDirection='column'
     >
+      <QuizNav questions={allQuestions} currentOrder={currentOrder} />
+
       {loading || !props ? (
         <Flex alignItems='center' h='100vh' justifyContent='center' gap='2'>
           <Spinner size='lg' />
