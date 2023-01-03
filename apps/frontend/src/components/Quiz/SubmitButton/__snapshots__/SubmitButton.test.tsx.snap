@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components > Quiz > SubmitButton should render buttonTextcorrectly 1`] = `
+<DocumentFragment>
+  <button
+    class="chakra-button css-0"
+    type="submit"
+  >
+    Click me!
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Components > Quiz > SubmitButton should render correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="chakra-button css-0"
+    type="submit"
+  >
+    Submit
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Components > Quiz > SubmitButton should render disabled state correctly 1`] = `
+<DocumentFragment>
+  <button
+    class="chakra-button css-0"
+    disabled=""
+    type="submit"
+  >
+    Submit
+  </button>
+</DocumentFragment>
+`;

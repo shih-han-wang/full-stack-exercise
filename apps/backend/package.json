@@ -21,6 +21,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.3",
     "@types/jest": "^29.0.0",
     "@types/node": "^17.0.45",
+    "@types/underscore": "^1.11.4",
     "docker-compose": "latest",
     "eslint": "7.32.0",
     "eslint-config-hyphen": "workspace:*",
@@ -36,5 +37,8 @@
     "ts-jest": "^28.0.8",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "underscore": "^1.13.6"
   }
 }
